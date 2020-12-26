@@ -2,8 +2,8 @@
   "background_color": "#ffffff",
   "display": "standalone",
   "lang": "en",
-  "name": "r-p-s",
-  "short_name": "r-p-s",
+  "name": "Rock Paper Scissors",
+  "short_name": "Rock Paper Scissors",
   "start_url": "/?utm_source=web_app_manifest",
   "orientation": "portrait",
   "icons": [
