@@ -1,0 +1,22 @@
+{
+  "files": {
+    "app.js": "/KayUmoren004/Rock-Paper-Scissors/static/js/app.d58b253d.chunk.js",
+    "app.js.map": "/KayUmoren004/Rock-Paper-Scissors/static/js/app.d58b253d.chunk.js.map",
+    "runtime~app.js": "/KayUmoren004/Rock-Paper-Scissors/static/js/runtime~app.0813da00.js",
+    "runtime~app.js.map": "/KayUmoren004/Rock-Paper-Scissors/static/js/runtime~app.0813da00.js.map",
+    "static/js/2.14a6a670.chunk.js": "/KayUmoren004/Rock-Paper-Scissors/static/js/2.14a6a670.chunk.js",
+    "static/js/2.14a6a670.chunk.js.map": "/KayUmoren004/Rock-Paper-Scissors/static/js/2.14a6a670.chunk.js.map",
+    "favicon-16.png": "/KayUmoren004/Rock-Paper-Scissors/favicon-16.png",
+    "favicon-32.png": "/KayUmoren004/Rock-Paper-Scissors/favicon-32.png",
+    "favicon.ico": "/KayUmoren004/Rock-Paper-Scissors/favicon.ico",
+    "index.html": "/KayUmoren004/Rock-Paper-Scissors/index.html",
+    "manifest.json": "/KayUmoren004/Rock-Paper-Scissors/manifest.json",
+    "serve.json": "/KayUmoren004/Rock-Paper-Scissors/serve.json",
+    "static/js/2.14a6a670.chunk.js.LICENSE.txt": "/KayUmoren004/Rock-Paper-Scissors/static/js/2.14a6a670.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime~app.0813da00.js",
+    "static/js/2.14a6a670.chunk.js",
+    "static/js/app.d58b253d.chunk.js"
+  ]
+}
