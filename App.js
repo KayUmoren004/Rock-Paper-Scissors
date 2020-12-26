@@ -1,195 +1,344 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View, SafeAreaView, Platform, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  Platform,
+  TouchableOpacity,
+  Modal,
+  TouchableHighlight,
+  Alert
+} from "react-native";
 
 export default class App extends React.Component {
   state = {
     scoreValue: 1,
-    userChoice:"",
-    botChoice:"",
+    userChoice: "",
+    botChoice: "",
+    Winner: "",
+    botScore: 0,
+    userScore: 0,
+    modalVisible: false
   };
 
-  deviceType() {
-    if (Platform.OS === "web") {
-      return {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        flexDirection: "row",
-      };
-    } else {
-      return {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        flexDirection: "column",
-      };
-    }
-  }
-
-  getUserInput = () => {
-
-    var botNum = Math.floor(Math.random() * 30) + 1
-   /* var rockRange = {
-        from: 0,
-        to: 10
-    }
-    var paperRange = {
-      from: 11,
-        to: 20
-    }
-    var scissorsRange = {
-      from: 21,
-        to: 30
-    }*/
 
 
+  botDecisionFunction = () => {
+    var botNum = Math.floor(Math.random() * 30) + 1;
 
-    if((botNum >= 1) && (botNum <= 10)) {
+    //Display Bot's Choice
+
+    if (botNum >= 0 && botNum <= 10) {
       this.setState({
-        botChoice: "Rock"
-      })
-    } else if((botNum >= 11) && (botNum <= 20)) {
+        botChoice: "Rock",
+      });
+    } else if (botNum >= 11 && botNum <= 20) {
       this.setState({
-        botChoice: "Paper"
-      })
-    } else if((botNum >= 21) && (botNum <= 30)) {
+        botChoice: "Paper",
+      });
+    } else if (botNum >= 21 && botNum <= 30) {
       this.setState({
-        botChoice: "Scissors"
-      })
+        botChoice: "Scissors",
+      });
     }
 
-    /*for (var r = 0; r<=10; r++){
-      rockRange.push(r)
+    //Bot Logic
+
+    //Logic for when user selects rock
+    if (this.state.userChoice === "Rock" && (botNum >= 0 && botNum <= 10)) {
+      this.setState({
+        Winner: "Tie",
+        //botScore: this.state.botScore + 1,
+        //userScore: this.state.userScore + 1,
+      });
+    } else if (
+      this.state.userChoice === "Rock" &&
+      (botNum >= 11 &&
+      botNum <= 20)
+    ) {
+      this.setState({
+        Winner: "Bot",
+        botScore: this.state.botScore + 1,
+        //userScore: this.state.userScore + 1,
+      });
+    } else if (
+      this.state.userChoice === "Rock" &&
+    (botNum >= 21 &&
+      botNum <= 30)
+    ) {
+      this.setState({
+        Winner: "Human",
+        //botScore: this.state.botScore + 1,
+        userScore: this.state.userScore + 1,
+      });
     }
 
-    for (var p = 0; p<=10; p++){
-      paperRange.push(r)
+    //Logic for when user selects paper
+    if (this.state.userChoice === "Paper" && (botNum >= 0 && botNum <= 10)) {
+      this.setState({
+        Winner: "Human",
+        //botScore: this.state.botScore + 1,
+        userScore: this.state.userScore + 1,
+      });
+    } else if (
+      this.state.userChoice === "Paper" &&
+      (botNum >= 11 &&
+      botNum <= 20)
+    ) {
+      this.setState({
+        Winner: "Tie",
+        //botScore: this.state.botScore + 1,
+       // userScore: this.state.userScore + 1,
+      });
+    } else if (
+      this.state.userChoice === "Paper" &&
+      (botNum >= 21 &&
+      botNum <= 30)
+    ) {
+      this.setState({
+        Winner: "Bot",
+        botScore: this.state.botScore + 1,
+        //userScore: this.state.userScore + 1,
+      });
     }
 
-    for (var s = 0; s<=10; s++){
-      scissorsRange.push(s)
-    }*/
-  }
+    //Logic for when user selects scissors
+    if (this.state.userChoice === "Scissors" && (botNum >= 0 && botNum <= 10)) {
+      this.setState({
+        Winner: "Bot",
+        botScore: this.state.botScore + 1,
+        //userScore: this.state.userScore + 1,
+      });
+    } else if (
+      this.state.userChoice === "Scissors" &&
+     ( botNum >= 11 &&
+      botNum <= 20)
+    ) {
+      this.setState({
+        Winner: "Human",
+        //botScore: this.state.botScore + 1,
+        userScore: this.state.userScore + 1,
+      });
+    } else if (
+      this.state.userChoice === "Scissors" &&
+      (botNum >= 21 &&
+      botNum <= 30)
+    ) {
+      this.setState({
+        Winner: "Tie",
+       // botScore: this.state.botScore + 1,
+        //userScore: this.state.userScore + 1,
+      });
+    }
+  };
+
+
 
   render() {
+    if (this.state.userScore === 5) {
+      Alert.alert(
+        "You Won!!!",
+        "You beat the Bot",
+        [
+          {
+            text: "Reset",
+            onPress: () => this.setState({
+              userScore: this.state.userScore = 0,
+              botScore: this.state.botScore = 0,
+            }, function() {}
+            ),
+            style: "destructive"
+          }
+        ],
+        { cancelable: false }
+      )
+    } else if (this.state.botScore === 5) {
+      Alert.alert(
+        "You Won!!!",
+        "You beat the Bot",
+        [
+          {
+            text: "Reset",
+            onPress: () => this.setState({
+              userScore: this.state.userScore = 0,
+              botScore: this.state.botScore = 0,
+            }, function() {}
+            ),
+            style: "destructive"
+          }
+        ],
+        { cancelable: false }
+      )
+    }
     return (
       <SafeAreaView style={styles.container}>
         <StatusBar style="light" />
-
+        <Text style={{ color: "#fff", fontWeight: "900", fontSize: 30 }}>
+          Winner: {this.state.Winner}
+        </Text>
         <View style={styles.gameContainer}>
           <View style={styles.human}>
-            <Text style={{ color: "#fff" }}>Human</Text>
-            <Text style={{ color: "#fff" }}>
-              Score: {this.state.scoreValue}
+            <Text style={{ color: "#fff", fontWeight: "900", fontSize: 30 }}>Human</Text>
+            <Text style={{ color: "#fff", fontWeight: "900", fontSize: 25 }}>
+              Score: {this.state.userScore}
             </Text>
 
             <View style={styles.gameView}>
               <View style={styles.winBackground}>
-                <Text style={{ color: "#000" }}>Choice: {this.state.userChoice}</Text>
+                <Text style={{ color: "#000", fontWeight: "900", fontSize: 20 }}>
+                  Choice: {this.state.userChoice}
+                </Text>
               </View>
 
               <View style={styles.choicesContainer}>
-                <TouchableOpacity onPress = {() => this.setState ({
-                    userChoice: "Rock"
-                  })}><Text
-                  style={{
-                    color: "#fff",
-                    padding: 10,
-                    borderWidth: 1,
-                    borderRadius:20,
-                    borderColor: "#fff",
-                    marginHorizontal:20
-                  }}
+                <TouchableOpacity
+                  onPress={() =>
+                    this.setState({
+                      userChoice: "Rock",
+                    })
+                  }
                 >
-                  Rock
-                </Text></TouchableOpacity>
-                <TouchableOpacity onPress = {() => this.setState ({
-                    userChoice: "Paper"
-                  })}><Text
-                  style={{
-                    color: "#fff",
-                    padding: 10,
-                    borderWidth: 1,
-                    borderRadius:20,
-                    marginHorizontal:20,
-                    borderColor: "#fff",
-                  }}
+                  <Text
+                    style={{
+                      color: "#fff",
+                      padding: 10,
+                      borderWidth: 1,
+                      borderRadius: 20,
+                      borderColor: "#fff",
+                      marginHorizontal: 20,
+                      fontWeight: "900", 
+                      fontSize: 15
+                    }}
+                  >
+                    Rock
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.setState({
+                      userChoice: "Paper",
+                    })
+                  }
                 >
-                  Paper
-                </Text></TouchableOpacity>
-                <TouchableOpacity onPress = {() => this.setState ({
-                    userChoice: "Scissors"
-                  })}><Text
-                  style={{
-                    color: "#fff",
-                    padding: 10,
-                    borderWidth: 1,
-                    borderRadius:20,
-                    marginHorizontal:20,
-                    borderColor: "#fff",
-                  }}
+                  <Text
+                    style={{
+                      color: "#fff",
+                      padding: 10,
+                      borderWidth: 1,
+                      borderRadius: 20,
+                      marginHorizontal: 20,
+                      borderColor: "#fff",
+                      fontWeight: "900", 
+                      fontSize: 15
+                    }}
+                  >
+                    Paper
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.setState({
+                      userChoice: "Scissors",
+                    })
+                  }
                 >
-                  Scissors
-                </Text></TouchableOpacity>
+                  <Text
+                    style={{
+                      color: "#fff",
+                      padding: 10,
+                      borderWidth: 1,
+                      borderRadius: 20,
+                      marginHorizontal: 20,
+                      borderColor: "#fff",
+                      fontWeight: "900", 
+                      fontSize: 15
+                    }}
+                  >
+                    Scissors
+                  </Text>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
 
           <View style={styles.bot}>
-            <Text style={{ color: "#fff" }}>Bot</Text>
-            <Text style={{ color: "#fff" }}>
-              Score: {this.state.scoreValue}
+            <Text style={{ color: "#fff", fontWeight: "900", fontSize: 30 }}>Bot</Text>
+            <Text style={{ color: "#fff", fontWeight: "900", fontSize: 25 }}>
+              Score: {this.state.botScore}
             </Text>
 
             <View style={styles.gameView}>
               <View style={styles.winBackground}>
-              <Text style={{ color: "#000" }}>Choice: {this.state.botChoice}</Text>
+                <Text style={{ color: "#000", fontWeight: "900", fontSize: 20 }}>
+                  Choice: {this.state.botChoice}
+                </Text>
               </View>
 
               <View style={styles.choicesContainer}>
-              <Text
+                <Text
                   style={{
                     color: "#fff",
                     padding: 10,
                     borderWidth: 1,
-                    borderRadius:20,
-                    marginHorizontal:20,
-                    //borderColor: "#fff",
-                  }}
-                >     </Text>
-               <TouchableOpacity onPress = {this.getUserInput}><Text
-                  style={{
-                    color: "#fff",
-                    padding: 10,
-                    borderWidth: 1,
-                    borderRadius:20,
-                    marginHorizontal:20,
-                   borderColor: "#fff",
-                  }}
-                >Play</Text></TouchableOpacity>
-                <TouchableOpacity
-                  onPress = {() => this.setState ({
-                    botChoice: "",
-                    userChoice: ""
-                  })}
-                ><Text
-                  style={{
-                    color: "#fff",
-                    padding: 10,
-                    borderWidth: 1,
-                    borderRadius:20,
-                    marginHorizontal:20,
+                    borderRadius: 20,
+                    marginHorizontal: 20,
                     borderColor: "#fff",
+                    fontWeight: "900", 
+                    fontSize: 15
                   }}
-                >Reset</Text>
+                >
+                  Rate
+                </Text>
+                <TouchableOpacity onPress={this.botDecisionFunction}>
+                  <Text
+                    style={{
+                      color: "#fff",
+                      padding: 10,
+                      borderWidth: 1,
+                      borderRadius: 20,
+                      marginHorizontal: 20,
+                      borderColor: "#fff",
+                      fontWeight: "900", 
+                      fontSize: 15
+                    }}
+                  >
+                    Play
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.setState({
+                      botChoice: "",
+                      userChoice: "",
+                      Winner: "",
+                    })
+                  }
+                >
+                  <Text
+                    style={{
+                      color: "#fff",
+                      padding: 10,
+                      borderWidth: 1,
+                      borderRadius: 20,
+                      marginHorizontal: 20,
+                      borderColor: "#fff",
+                      fontWeight: "900", 
+                      fontSize: 15
+                    }}
+                  >
+                    Reset
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
           </View>
         </View>
 
-        <Text style={{ color: "#fff" }}>Made by Godson Umoren</Text>
+        <Text style={{ color: "#fff", position: "absolute", bottom: 0, marginVertical:30, fontWeight:"900" }}>
+          Made by Godson Umoren
+        </Text>
       </SafeAreaView>
     );
   }
@@ -207,7 +356,7 @@ const styles = StyleSheet.create({
   },
 
   gameContainer: {
-    flex: 1,
+    //flex: 1,
     alignItems: "center",
     justifyContent: "center",
 
@@ -252,10 +401,49 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   choicesContainer: {
-   paddingVertical: 20,
+    paddingVertical: 20,
     flexDirection: "row",
     justifyContent: "space-evenly",
     //alignItems:"center",
     margin: 10,
   },
+  modalView: {
+    margin: 20,
+    backgroundColor:"#fff",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#fff",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5
+  },
+  openButton: {
+    backgroundColor: "#F194FF",
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2
+  },
+  textStyle: {
+    color:"#fff",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
+    color:"#fff"
+  },
+  centeredView: {
+    //flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+    //backgroundColor:"#fff"
+  },
+
 });
