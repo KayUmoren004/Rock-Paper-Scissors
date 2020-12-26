@@ -5,6 +5,8 @@ import { StyleSheet, Text, View, SafeAreaView, Platform, TouchableOpacity } from
 export default class App extends React.Component {
   state = {
     scoreValue: 1,
+    userChoice:"",
+    botChoice:"",
   };
 
   deviceType() {
@@ -25,6 +27,51 @@ export default class App extends React.Component {
     }
   }
 
+  getUserInput = () => {
+
+    var botNum = Math.floor(Math.random() * 30) + 1
+   /* var rockRange = {
+        from: 0,
+        to: 10
+    }
+    var paperRange = {
+      from: 11,
+        to: 20
+    }
+    var scissorsRange = {
+      from: 21,
+        to: 30
+    }*/
+
+
+
+    if((botNum >= 1) && (botNum <= 10)) {
+      this.setState({
+        botChoice: "Rock"
+      })
+    } else if((botNum >= 11) && (botNum <= 20)) {
+      this.setState({
+        botChoice: "Paper"
+      })
+    } else if((botNum >= 21) && (botNum <= 30)) {
+      this.setState({
+        botChoice: "Scissors"
+      })
+    }
+
+    /*for (var r = 0; r<=10; r++){
+      rockRange.push(r)
+    }
+
+    for (var p = 0; p<=10; p++){
+      paperRange.push(r)
+    }
+
+    for (var s = 0; s<=10; s++){
+      scissorsRange.push(s)
+    }*/
+  }
+
   render() {
     return (
       <SafeAreaView style={styles.container}>
@@ -32,18 +79,20 @@ export default class App extends React.Component {
 
         <View style={styles.gameContainer}>
           <View style={styles.human}>
-            <Text style={{ color: "#fff" }}>Name</Text>
+            <Text style={{ color: "#fff" }}>Human</Text>
             <Text style={{ color: "#fff" }}>
               Score: {this.state.scoreValue}
             </Text>
 
             <View style={styles.gameView}>
               <View style={styles.winBackground}>
-                <Text style={{ color: "#000" }}>Choice</Text>
+                <Text style={{ color: "#000" }}>Choice: {this.state.userChoice}</Text>
               </View>
 
               <View style={styles.choicesContainer}>
-                <TouchableOpacity><Text
+                <TouchableOpacity onPress = {() => this.setState ({
+                    userChoice: "Rock"
+                  })}><Text
                   style={{
                     color: "#fff",
                     padding: 10,
@@ -55,7 +104,9 @@ export default class App extends React.Component {
                 >
                   Rock
                 </Text></TouchableOpacity>
-                <TouchableOpacity><Text
+                <TouchableOpacity onPress = {() => this.setState ({
+                    userChoice: "Paper"
+                  })}><Text
                   style={{
                     color: "#fff",
                     padding: 10,
@@ -67,7 +118,9 @@ export default class App extends React.Component {
                 >
                   Paper
                 </Text></TouchableOpacity>
-                <TouchableOpacity><Text
+                <TouchableOpacity onPress = {() => this.setState ({
+                    userChoice: "Scissors"
+                  })}><Text
                   style={{
                     color: "#fff",
                     padding: 10,
@@ -84,18 +137,43 @@ export default class App extends React.Component {
           </View>
 
           <View style={styles.bot}>
-            <Text style={{ color: "#fff" }}>Name</Text>
+            <Text style={{ color: "#fff" }}>Bot</Text>
             <Text style={{ color: "#fff" }}>
               Score: {this.state.scoreValue}
             </Text>
 
             <View style={styles.gameView}>
               <View style={styles.winBackground}>
-                <Text style={{ color: "#000" }}>Choice</Text>
+              <Text style={{ color: "#000" }}>Choice: {this.state.botChoice}</Text>
               </View>
 
               <View style={styles.choicesContainer}>
-              <TouchableOpacity><Text
+              <Text
+                  style={{
+                    color: "#fff",
+                    padding: 10,
+                    borderWidth: 1,
+                    borderRadius:20,
+                    marginHorizontal:20,
+                    //borderColor: "#fff",
+                  }}
+                >     </Text>
+               <TouchableOpacity onPress = {this.getUserInput}><Text
+                  style={{
+                    color: "#fff",
+                    padding: 10,
+                    borderWidth: 1,
+                    borderRadius:20,
+                    marginHorizontal:20,
+                   borderColor: "#fff",
+                  }}
+                >Play</Text></TouchableOpacity>
+                <TouchableOpacity
+                  onPress = {() => this.setState ({
+                    botChoice: "",
+                    userChoice: ""
+                  })}
+                ><Text
                   style={{
                     color: "#fff",
                     padding: 10,
@@ -104,33 +182,8 @@ export default class App extends React.Component {
                     marginHorizontal:20,
                     borderColor: "#fff",
                   }}
-                >
-                  Rock
-                </Text></TouchableOpacity>
-                <TouchableOpacity><Text
-                  style={{
-                    color: "#fff",
-                    padding: 10,
-                    borderWidth: 1,
-                    borderRadius:20,
-                    marginHorizontal:20,
-                    borderColor: "#fff",
-                  }}
-                >
-                  Paper
-                </Text></TouchableOpacity>
-                <TouchableOpacity><Text
-                  style={{
-                    color: "#fff",
-                    padding: 10,
-                    borderWidth: 1,
-                    borderRadius:20,
-                    marginHorizontal:20,
-                    borderColor: "#fff",
-                  }}
-                >
-                  Scissors
-                </Text></TouchableOpacity>
+                >Reset</Text>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
