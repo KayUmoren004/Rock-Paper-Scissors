@@ -156,8 +156,8 @@ export default class App extends React.Component {
       )
     } else if (this.state.botScore === 5) {
       Alert.alert(
-        "You Won!!!",
-        "You beat the Bot",
+        "You Lost!!!",
+        "The Bot beat You",
         [
           {
             text: "Reset",
