@@ -30,6 +30,9 @@ export default class App extends React.Component {
 
     //Display Bot's Choice
 
+
+    //see if you can use min-max range later
+
     if (botNum >= 0 && botNum <= 10) {
       this.setState({
         botChoice: "Rock",
@@ -47,6 +50,9 @@ export default class App extends React.Component {
     //Bot Logic
 
     //Logic for when user selects rock
+
+
+    //should use switch statements
     if (this.state.userChoice === "Rock" && (botNum >= 0 && botNum <= 10)) {
       this.setState({
         Winner: "Tie",
